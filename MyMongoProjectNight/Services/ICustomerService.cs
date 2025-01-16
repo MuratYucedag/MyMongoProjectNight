@@ -9,5 +9,6 @@ namespace MyMongoProjectNight.Services
         Task UpdateCustomerAsync(UpdateCustomerDto updateCustomerDto);
         Task DeleteCustomerAsync(string customerId);
         Task<GetByIdCustomerDto> GetByIdCustomerAsync(string customerId);
+        Task<List<ResultCustomerWithCategoryDto>> GetAllCustomerWithCategoryAsync();
     }
 }

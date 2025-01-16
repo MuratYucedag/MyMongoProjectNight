@@ -1,6 +1,26 @@
+using Microsoft.Extensions.Options;
+using MyMongoProjectNight.Services;
+using MyMongoProjectNight.Services.DepartmentServices;
+using MyMongoProjectNight.Settings;
+using System.Reflection;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+builder.Services.Configure<DatabaseSettings>(builder.Configuration.GetSection("DatabaseSettingsKey"));
+
+builder.Services.AddScoped<IDatabaseSettings>(sp =>
+{
+    return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value;
+});
+
+
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
